@@ -1,0 +1,64 @@
+.Experience {
+    padding: 0px 0 25px 0;
+}
+
+.Experience.dark .MuiAccordion-root {
+    background-color: #18181B !important;
+}
+
+.Experience .MuiAccordion-root {
+    background-color: inherit !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    box-shadow: none !important;
+    color: inherit !important;
+    margin: 0 !important;
+    position: relative;
+}
+
+.Experience .MuiAccordion-root.expanded:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: calc(100% - 30px);
+    height: .5px;
+    background-color: #ccc;
+    transform: translateX(-50%);
+}
+
+.Experience .MuiAccordion-root:last-child {
+    border-bottom: none !important;
+}
+
+.Experience .MuiAccordion-root.expanded {
+    margin-bottom: 0 !important;
+}
+
+.Experience .MuiAccordionSummary-root {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+}
+
+.Experience-summary {
+    align-items: center;
+    display: flex;
+    width: 100%;
+}
+
+.Experience-icon {
+    background-color: white;
+    border-radius: 50%;
+    height: 50px;
+    margin-right: 16px;
+    object-fit: contain;
+}
+
+.Experience-summary-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.Experience .MuiAccordionDetails-root {
+    padding: 16px !important;
+}

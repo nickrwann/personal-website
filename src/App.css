@@ -1,0 +1,33 @@
+:root {
+  --background-color: #fff;
+  --text-color: black;
+}
+
+.dark-mode {
+  --background-color: black;
+  --text-color: #fff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+.App {
+  width: 90%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .App {
+    width: 52%;
+  }
+}
+
+@media (min-width: 750px) {
+  .App {
+    width: 33%;
+  }
+}
