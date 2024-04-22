@@ -1,29 +1,52 @@
+/* app.css */
+
+/* Define root color variables for easy theme management */
 :root {
   --background-color: #fff;
   --text-color: black;
 }
 
+/* Dark mode adjustments using class toggles */
 .dark-mode {
   --background-color: black;
-  --text-color: #fff;
+  --text-color: white;
 }
 
+/* Body styling using CSS variables for themes */
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color var(--transition-duration), color var(--transition-duration);
 }
 
+/* Main app container styling */
 .App {
-  width: 90%;
-  max-width: 750px;
+  width: 75%;
+  max-width: 710px;
   min-width: 300px;
   margin: 0 auto;
 }
 
-@media (min-width: 600px) {
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
   .App {
-    width: 50%;
+    width: 90%;
+    padding: 0 10px;
   }
 }
 
+/* Additional responsive settings for very small devices */
+@media (max-width: 400px) {
+  .App {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+.App .section {
+  padding: 0px 0 25px 0;
+}
+
+.App .section-title {
+
+}

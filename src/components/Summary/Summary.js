@@ -1,15 +1,16 @@
+// React
 import React from 'react';
-import './Summary.css';
 
-// Import icon images
+// Styles and icons
+import './Summary.css';
 import githubIcon from '../../assets/icons/github.svg';
 import instagramIcon from '../../assets/icons/instagram.svg';
 import linkedinIcon from '../../assets/icons/linkedin-2.svg';
 
 const Summary = ({ isDarkMode }) => {
     return (
-        <div className="summary">
-            <h1>Hi, I'm Nick</h1>
+        <div className="section">
+            <h2>Hi, I'm Nick!</h2>
             <p>
                 I'm an Aggie Software Engineer at Dell Technologies, innovating system optimizations and 
                 tackling user-centric problems in cutting-edge tech projects.

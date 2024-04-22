@@ -4,6 +4,8 @@ import Navbar from './components/Navbar/Navbar';
 import ProfilePic from './components/ProfilePic/ProfilePic';
 import Summary from './components/Summary/Summary';
 import Experience from './components/Experience/Experience';
+import Example from './components/Example/Example';
+import NowPlaying from './components/NowPlaying/NowPlaying';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(true);
@@ -23,6 +25,7 @@ const App = () => {
               <ProfilePic />
               <Summary isDarkMode={darkMode} />
               <Experience isDarkMode={darkMode} />
+              <NowPlaying isDarkMode={darkMode} />
             </main>
         </div>
     );

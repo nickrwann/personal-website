@@ -1,64 +1,92 @@
+/* Overall Experience section styling */
 .Experience {
     padding: 0px 0 25px 0;
 }
 
+/* Container wrapping all accordions with rounded corners */
+.Experience .AccordionsContainer {
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+/* Dark mode specific accordion background */
 .Experience.dark .MuiAccordion-root {
     background-color: #18181B !important;
 }
 
+/* Default accordion styles inheriting background and removing box shadows */
 .Experience .MuiAccordion-root {
     background-color: inherit !important;
-    border-bottom: 1px solid rgba(0, 0, 0, .125);
     box-shadow: none !important;
     color: inherit !important;
     margin: 0 !important;
     position: relative;
+    padding-bottom: 1px; /* Creates space for the border */
 }
 
-.Experience .MuiAccordion-root.expanded:not(:last-child)::after {
+/* Pseudo-element to create a 90% wide bottom border */
+.Experience .MuiAccordion-root::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 50%;
-    width: calc(100% - 30px);
-    height: .5px;
-    background-color: #ccc;
-    transform: translateX(-50%);
+    left: 2.5%; /* Starts 5% from the left edge */
+    width: 95%; /* Makes the border 90% of the parent's width */
+    border-bottom: 1px solid #ffffff35; /* Style of the border */
+    box-sizing: border-box; /* Ensures the border width does not add to the overall size */
 }
 
-.Experience .MuiAccordion-root:last-child {
-    border-bottom: none !important;
+/* Remove bottom border for the last accordion */
+.Experience .MuiAccordion-root:last-child::after {
+    display: none; /* Hides the border on the last accordion */
 }
 
+/* Ensure no additional margins for expanded accordions */
 .Experience .MuiAccordion-root.expanded {
     margin-bottom: 0 !important;
 }
 
+/* Styling for accordion summary */
 .Experience .MuiAccordionSummary-root {
     align-items: center;
     cursor: pointer;
     display: flex;
 }
 
+/* Styling for the section containing accordion details like logo and text */
 .Experience-summary {
     align-items: center;
     display: flex;
     width: 100%;
 }
 
+/* Styling for the company logo within each accordion */
 .Experience-icon {
     background-color: white;
     border-radius: 50%;
-    height: 50px;
+    height: 40px;
     margin-right: 16px;
     object-fit: contain;
 }
 
+/* Text container within accordion summary */
 .Experience-summary-text {
     display: flex;
     flex-direction: column;
 }
 
+.title {
+    font-size: 1rem !important;
+}
+
+.date {
+    font-size: .75rem !important;
+}
+
+.description {
+    font-size: 1rem !important;
+}
+
+/* Padding for accordion details */
 .Experience .MuiAccordionDetails-root {
     padding: 16px !important;
 }

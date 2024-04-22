@@ -1,9 +1,11 @@
+/* Scrollbar settings for all browsers */
 html {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
   overflow: overlay;
 }
 
+/* Scrollbar settings specifically for WebKit browsers */
 html::-webkit-scrollbar {
   width: 0px;
 }
@@ -12,6 +14,7 @@ html::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
 
+/* Universal body styles */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -21,6 +24,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Universal styles for code elements */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
