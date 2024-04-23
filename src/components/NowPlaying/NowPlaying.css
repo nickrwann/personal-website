@@ -1,41 +1,44 @@
-/* Common styles for both light mode and dark mode */
+/* Card container */
 .nowPlayingCard {
-    flex-shrink: 0;
-    border-radius: 22px;
-    align-items: center;
-    width: 400px;
-    height: 80px;
     display: flex;
+    flex-shrink: 0;
+    align-items: center;
     justify-content: center;
+    border-radius: 22px;
+    max-width: 400px;
+    width: 95%;
+    height: 80px;
     margin: auto;
 }
 
 .nowPlayingCard.light-mode {
-    border: 2px solid #000;
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    border: 2px solid #000; /* Black border */
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3); /* Black shadow */
 }
 
 .nowPlayingCard.dark-mode {
-    border: 2px solid white;
-    box-shadow: 5px 5px 0 #ffffff35;
+    border: 2px solid #fff; /* White border */
+    box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3); /* White shadow */
 }
 
 .nowPlayingCard:hover {
     cursor: pointer;
-    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3); /* Black shadow */
     transform: translateX(-10px) translateY(-10px);
     transition: all 0.5s ease;
 }
 
 .nowPlayingCard.light-mode:hover {
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
     background-color: rgba(0, 0, 0, 0.1);
 }
 
 .nowPlayingCard.dark-mode:hover {
+    box-shadow: 10px 10px 0 rgba(255, 255, 255, 0.3);
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Shared styles for images */
+/* Image */
 .nowPlayingCard .nowPlayingImage img {
     border-radius: 8px;
     transition: all 0.5s ease;
@@ -46,29 +49,30 @@
 }
 
 .nowPlayingCard.light-mode .nowPlayingImage img {
-    border: 1px solid black;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid #000; /* Black border */
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3); /* Black shadow */
 }
 
 .nowPlayingCard.light-mode .nowPlayingImage img:hover {
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3); /* Black shadow */
     transform: translateX(-3px) translateY(-3px);
 }
 
 .nowPlayingCard.dark-mode .nowPlayingImage img {
-    border: 1px solid white;
-    box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3);
+    border: 1px solid #fff; /* White border */
+    box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3); /* White shadow */
 }
 
 .nowPlayingCard.dark-mode .nowPlayingImage img:hover {
-    box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3); /* White shadow */
     transform: translateX(-3px) translateY(-3px);
 }
 
+/* Details */
 #nowPlayingDetails {
-    justify-content: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 54%;
     height: 100%;
     overflow: hidden;

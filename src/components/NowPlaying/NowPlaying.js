@@ -4,6 +4,7 @@ import { AiOutlinePauseCircle } from 'react-icons/ai';
 import { BiErrorCircle } from 'react-icons/bi';
 import { HiOutlineStatusOffline } from 'react-icons/hi';
 import './NowPlaying.css';
+// import './box.css';
 import soundbar from '../../assets/soundbar.gif';
 
 const API_URLS = {
@@ -91,7 +92,7 @@ const NowPlaying = ({ isDarkMode }) => {
         setIsOverflowing(isOverflowing);
 
         if (isOverflowing) {
-            const translationSpeed = 20;
+            const translationSpeed = 15;
             const translationPercentage = (titleWidth / containerWidth) * 100;
             const translationTime = translationPercentage / translationSpeed;
             const dynamicMarqueeKeyframes = `@keyframes marquee-animation {
@@ -135,35 +136,29 @@ const NowPlaying = ({ isDarkMode }) => {
   const duration_ms = item ? item.duration_ms : null;
 
   return (
-    <div className='section'>
-      <h2>Widgets</h2>
-      <div
-        className={`nowPlayingCard ${isDarkMode ? 'dark-mode' : 'light-mode'}`}
-        onClick={() => handleCardClick(item)}
-      >
-        <div className='nowPlayingImage'>
-          <img src={item && item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : ''} alt="Album" />
+    <div
+      className={`nowPlayingCard ${isDarkMode ? 'dark-mode' : 'light-mode'}`}
+      onClick={() => handleCardClick(item)}
+    >
+      <div className='nowPlayingImage'>
+        <img src={item && item.album && item.album.images && item.album.images[0] ? item.album.images[0].url : ''} alt="Album" />
+      </div>
+      <div id='nowPlayingDetails'>
+        <div ref={titleRef} className={`nowPlayingTitle ${isOverflowing ? 'marquee-content' : ''}`}>
+          {nowPlaying && nowPlaying.item && nowPlaying.item.name}
         </div>
-        <div id='nowPlayingDetails'>
-          {/* <div className={`nowPlayingTitle ${item && item.name && item.name.length > 15 ? 'marquee-content' : ''}`}>
-            {item && item.name}
-          </div> */}
-          <div ref={titleRef} className={`nowPlayingTitle ${isOverflowing ? 'marquee-content' : ''}`}>
-            {nowPlaying && nowPlaying.item && nowPlaying.item.name}
-          </div>
-          <div className='nowPlayingArtist'>
-            {item && item.artists && item.artists.map(artist => artist.name).join(', ')}
-          </div>
-          <div className='nowPlayingTime'>
-            {progress_ms && duration_ms ? `${formatTime(progress_ms)} / ${formatTime(duration_ms)}` : ''}
-          </div>
+        <div className='nowPlayingArtist'>
+          {item && item.artists && item.artists.map(artist => artist.name).join(', ')}
         </div>
-        <div className='nowPlayingState'>
-          {playState === 'PLAY' ? <img src={soundbar} alt="Now Playing" /> :
-          playState === 'PAUSE' ? <AiOutlinePauseCircle size={40} /> :
-          playState === 'OFFLINE' ? <HiOutlineStatusOffline size={40} /> :
-          <BiErrorCircle size={40} />}
+        <div className='nowPlayingTime'>
+          {progress_ms && duration_ms ? `${formatTime(progress_ms)} / ${formatTime(duration_ms)}` : ''}
         </div>
+      </div>
+      <div className='nowPlayingState'>
+        {playState === 'PLAY' ? <img src={soundbar} alt="Now Playing" /> :
+        playState === 'PAUSE' ? <AiOutlinePauseCircle size={40} /> :
+        playState === 'OFFLINE' ? <HiOutlineStatusOffline size={40} /> :
+        <BiErrorCircle size={40} />}
       </div>
     </div>
   );
