@@ -4,7 +4,6 @@ import Navbar from './components/Navbar/Navbar';
 import ProfilePic from './components/ProfilePic/ProfilePic';
 import Summary from './components/Summary/Summary';
 import Experience from './components/Experience/Experience';
-import Widgets from './components/Widgets/Widgets';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(true);
@@ -24,7 +23,6 @@ const App = () => {
               <ProfilePic />
               <Summary isDarkMode={darkMode} />
               <Experience isDarkMode={darkMode} />
-              <Widgets isDarkMode={darkMode} />
             </main>
         </div>
     );
