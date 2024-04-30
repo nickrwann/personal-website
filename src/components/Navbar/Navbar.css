@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem;
+    background-color: inherit;
+    color: inherit;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.theme-toggle-button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+    background-color: inherit;
+}
+
+.dark-mode .theme-toggle-button {
+    filter: invert(1);
+}

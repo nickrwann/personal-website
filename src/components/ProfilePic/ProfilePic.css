@@ -1,0 +1,10 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    height: 300px;
+    object-fit: contain;
+}

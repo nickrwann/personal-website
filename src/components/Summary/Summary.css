@@ -1,0 +1,16 @@
+.icon-row {
+    display: flex;
+    margin-top: 20px;
+}
+
+.icon-row a {
+    margin: 0 10px;
+}
+
+.icon-row img {
+    height: 25px;
+}
+
+.dark-mode .inverted {
+    filter: invert(1);
+}
