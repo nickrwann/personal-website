@@ -2,12 +2,12 @@
 import React from 'react';
 
 // Styles and assets
-import './ProfilePic.css';
-import profilePic from '../../assets/profile.jpg';
+import '../styles/ProfilePic.css';
+import profilePic from '../assets/images/profile.jpg';
 
 const ProfilePic = () => {
     return (
-        <div className="section">
+        <div className="section" data-testid="profile-pic">
             <div className="profile-container">
                 <img src={profilePic} alt="Profile" className="profile-pic" />
             </div>

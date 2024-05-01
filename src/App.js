@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import ProfilePic from './components/ProfilePic/ProfilePic';
-import Summary from './components/Summary/Summary';
-import Experience from './components/Experience/Experience';
+import './styles/App.css';
+import Navbar from './components/Navbar';
+import ProfilePic from './components/ProfilePic';
+import Summary from './components/Summary';
+import Experience from './components/Experience';
 
 const App = () => {
     const [darkMode, setDarkMode] = useState(true);
