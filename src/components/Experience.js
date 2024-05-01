@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 // Data and styles
-import jobData from '../../data/jobData';
-import './Experience.css';
+import jobData from '../data/jobData';
+import '../styles/Experience.css';
 
 const Experience = ({ isDarkMode }) => {
     const [expanded, setExpanded] = useState(null);
@@ -20,7 +20,7 @@ const Experience = ({ isDarkMode }) => {
     };
 
     return (
-      <div className={isDarkMode ? 'Experience dark' : 'Experience'}>
+      <div className={isDarkMode ? 'Experience dark' : 'Experience'} data-testid="experience">
           <h2>Work Experience</h2>
           <div className="AccordionsContainer">
               {Object.keys(jobData).map((key) => (

@@ -1,5 +1,5 @@
 import dellLogo from '../assets/logos/dell-logo.jpg';
-import tamuLogo from '../assets/logos/tamu-logo-2.jpg';
+import tamuLogo from '../assets/logos/tamu-logo.jpg';
 import thoughtTraceLogo from '../assets/logos/thoughttrace-logo.png';
 
 const jobData = {

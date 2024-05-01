@@ -2,13 +2,13 @@
 import React from 'react';
 
 // Styles and assets
-import './Navbar.css';
-import sunIcon from '../../assets/icons/sun.svg';
-import moonIcon from '../../assets/icons/moon.svg';
+import '../styles/Navbar.css';
+import sunIcon from '../assets/icons/sun.svg';
+import moonIcon from '../assets/icons/moon.svg';
 
 const Navbar = ({ onToggleTheme, isDarkMode }) => {
     return (
-        <nav className="navbar">
+        <nav className="navbar" data-testid="navbar">
             <span className="logo">NW</span>
             <button 
                 onClick={onToggleTheme} 
