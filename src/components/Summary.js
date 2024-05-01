@@ -17,14 +17,14 @@ const Summary = ({ isDarkMode }) => {
                 When I'm not doing this, you'll find me at the gym, gaming, or traveling to new places.
             </p>
             <div className="icon-row">
+                <a href="https://www.linkedin.com/in/nick-wanner" target="_blank" rel="noopener noreferrer">
+                    <img src={linkedinIcon} alt="LinkedIn" className={isDarkMode ? 'inverted' : ''} />
+                </a>
                 <a href="https://github.com/nickrwann/" target="_blank" rel="noopener noreferrer">
                     <img src={githubIcon} alt="GitHub" className={isDarkMode ? 'inverted' : ''} />
                 </a>
                 <a href="https://www.instagram.com/_nickwinner_" target="_blank" rel="noopener noreferrer">
                     <img src={instagramIcon} alt="Instagram" className={isDarkMode ? 'inverted' : ''} />
-                </a>
-                <a href="https://www.linkedin.com/in/nick-wanner" target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinIcon} alt="LinkedIn" className={isDarkMode ? 'inverted' : ''} />
                 </a>
             </div>
         </div>
