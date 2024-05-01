@@ -2,8 +2,8 @@
 import React from 'react';
 
 // Styles and assets
-import './ProfilePic.css';
-import profilePic from '../../assets/profile.jpg';
+import '../styles/ProfilePic.css';
+import profilePic from '../assets/profile.jpg';
 
 const ProfilePic = () => {
     return (

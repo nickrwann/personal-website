@@ -2,9 +2,9 @@
 import React from 'react';
 
 // Styles and assets
-import './Navbar.css';
-import sunIcon from '../../assets/icons/sun.svg';
-import moonIcon from '../../assets/icons/moon.svg';
+import '../styles/Navbar.css';
+import sunIcon from '../assets/icons/sun.svg';
+import moonIcon from '../assets/icons/moon.svg';
 
 const Navbar = ({ onToggleTheme, isDarkMode }) => {
     return (

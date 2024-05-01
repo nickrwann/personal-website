@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 // Data and styles
-import jobData from '../../data/jobData';
-import './Experience.css';
+import jobData from '../data/jobData';
+import '../styles/Experience.css';
 
 const Experience = ({ isDarkMode }) => {
     const [expanded, setExpanded] = useState(null);

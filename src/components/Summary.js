@@ -2,10 +2,10 @@
 import React from 'react';
 
 // Styles and icons
-import './Summary.css';
-import githubIcon from '../../assets/icons/github.svg';
-import instagramIcon from '../../assets/icons/instagram.svg';
-import linkedinIcon from '../../assets/icons/linkedin-2.svg';
+import '../styles/Summary.css';
+import githubIcon from '../assets/icons/github.svg';
+import instagramIcon from '../assets/icons/instagram.svg';
+import linkedinIcon from '../assets/icons/linkedin-2.svg';
 
 const Summary = ({ isDarkMode }) => {
     return (
