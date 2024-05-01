@@ -5,7 +5,7 @@ import React from 'react';
 import '../styles/Summary.css';
 import githubIcon from '../assets/icons/github.svg';
 import instagramIcon from '../assets/icons/instagram.svg';
-import linkedinIcon from '../assets/icons/linkedin-2.svg';
+import linkedinIcon from '../assets/icons/linkedin.svg';
 
 const Summary = ({ isDarkMode }) => {
     return (

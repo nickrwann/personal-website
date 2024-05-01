@@ -3,7 +3,7 @@ import React from 'react';
 
 // Styles and assets
 import '../styles/ProfilePic.css';
-import profilePic from '../assets/profile.jpg';
+import profilePic from '../assets/images/profile.jpg';
 
 const ProfilePic = () => {
     return (
