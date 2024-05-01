@@ -20,7 +20,7 @@ const Experience = ({ isDarkMode }) => {
     };
 
     return (
-      <div className={isDarkMode ? 'Experience dark' : 'Experience'}>
+      <div className={isDarkMode ? 'Experience dark' : 'Experience'} data-testid="experience">
           <h2>Work Experience</h2>
           <div className="AccordionsContainer">
               {Object.keys(jobData).map((key) => (

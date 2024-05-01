@@ -8,7 +8,7 @@ import moonIcon from '../assets/icons/moon.svg';
 
 const Navbar = ({ onToggleTheme, isDarkMode }) => {
     return (
-        <nav className="navbar">
+        <nav className="navbar" data-testid="navbar">
             <span className="logo">NW</span>
             <button 
                 onClick={onToggleTheme} 

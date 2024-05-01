@@ -9,7 +9,7 @@ import linkedinIcon from '../assets/icons/linkedin.svg';
 
 const Summary = ({ isDarkMode }) => {
     return (
-        <div className="section">
+        <div className="section" data-testid="summary">
             <h2>Hi, I'm Nick!</h2>
             <p>
                 I'm an Aggie Software Engineer at Dell Technologies, innovating system optimizations and 

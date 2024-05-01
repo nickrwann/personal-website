@@ -7,7 +7,7 @@ import profilePic from '../assets/images/profile.jpg';
 
 const ProfilePic = () => {
     return (
-        <div className="section">
+        <div className="section" data-testid="profile-pic">
             <div className="profile-container">
                 <img src={profilePic} alt="Profile" className="profile-pic" />
             </div>
