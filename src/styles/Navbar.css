@@ -1,3 +1,4 @@
+/* Main navbar container */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -7,12 +8,14 @@
     color: inherit;
 }
 
-.logo {
+/* Logo styles for the navbar */
+.navbar-logo {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.theme-toggle-button {
+/* Theme toggle button within the navbar */
+.navbar-theme-toggle {
     width: 30px;
     height: 30px;
     border: none;
@@ -21,6 +24,7 @@
     background-color: inherit;
 }
 
-.dark-mode .theme-toggle-button {
+/* Dark mode specific styles for the toggle button */
+.dark-mode .navbar-theme-toggle {
     filter: invert(1);
 }
