@@ -16,7 +16,8 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  transition: background-color var(--transition-duration), color var(--transition-duration);
+  transition: background-color var(--transition-duration),
+    color var(--transition-duration);
 }
 
 /* Main app container styling */
@@ -36,9 +37,9 @@ body {
 }
 
 .App .section {
-  padding: 0px 0 25px 0;
+  padding: 25px 0px;
 }
 
-.App .section-title {
-
+.App h2 {
+  margin-top: 0;
 }

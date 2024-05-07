@@ -1,21 +1,21 @@
 /* Container for the summary section */
 .summary-section {
-    margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 /* Container for icon links */
 .summary-icon-row {
-    display: flex;
-    margin-top: 20px;
+  display: flex;
+  margin-top: 20px;
 }
 
 /* Default icon styles */
 .summary-icon {
-    height: 25px;
-    margin: 0 10px;
+  height: 25px;
+  margin: 0 10px;
 }
 
 /* Apply inverted color filter in dark mode */
 .inverted {
-    filter: invert(1);
+  filter: invert(1);
 }
