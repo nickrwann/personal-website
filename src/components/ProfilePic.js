@@ -5,14 +5,10 @@ import React from "react";
 import "../styles/ProfilePic.css";
 import profilePic from "../assets/images/profile.jpg";
 
-const ProfilePic = () => {
-  return (
-    <div data-testid="profile-pic">
-      <div className="profile-container">
-        <img src={profilePic} alt="Profile" className="profile-pic" />
-      </div>
-    </div>
-  );
-};
+const ProfilePic = () => (
+  <div data-testid="profile-pic" className="profile-container">
+    <img src={profilePic} alt="Profile" className="profile-pic" />
+  </div>
+);
 
 export default ProfilePic;

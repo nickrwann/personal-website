@@ -1,17 +1,16 @@
 // React
-import React from 'react';
+import React from "react";
 
-// Styles and icons
-import '../styles/Widgets.css';
-import NowPlaying from './NowPlaying';
+// Styles
+import "../styles/Widgets.css";
 
-const Widgets = ({ isDarkMode }) => {
-    return (
-        <div className="section">
-            <h2>Widgets</h2>
-            <NowPlaying isDarkMode={isDarkMode} />
-        </div>
-    );
+const Widgets = ({ isDarkMode, children }) => {
+  return (
+    <div className="section">
+      <h2>Widgets</h2>
+      {children}
+    </div>
+  );
 };
 
 export default Widgets;

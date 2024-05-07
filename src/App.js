@@ -5,6 +5,7 @@ import ProfilePic from "./components/ProfilePic";
 import Summary from "./components/Summary";
 import Experience from "./components/Experience";
 import Widgets from "./components/Widgets";
+import NowPlaying from "./components/NowPlaying";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -31,7 +32,9 @@ const App = () => {
           <Experience isDarkMode={darkMode} />
         </div>
         <div className="section">
-          <Widgets isDarkMode={darkMode} />
+          <Widgets isDarkMode={darkMode}>
+            <NowPlaying isDarkMode={darkMode} />
+          </Widgets>
         </div>
       </main>
     </div>
