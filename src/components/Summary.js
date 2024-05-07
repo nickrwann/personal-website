@@ -8,8 +8,10 @@ import instagramIcon from "../assets/icons/instagram.svg";
 import linkedinIcon from "../assets/icons/linkedin.svg";
 
 const Summary = ({ isDarkMode }) => {
+  const iconClassName = isDarkMode ? "summary-icon inverted" : "summary-icon";
+
   return (
-    <div className="section" data-testid="summary">
+    <div className="summary-section" data-testid="summary">
       <h2>Hi, I'm Nick!</h2>
       <p>
         I'm an Aggie Software Engineer at Dell Technologies, innovating system
@@ -17,7 +19,7 @@ const Summary = ({ isDarkMode }) => {
         projects. When I'm not doing this, you'll find me at the gym, gaming, or
         traveling to new places.
       </p>
-      <div className="icon-row">
+      <div className="summary-icon-row">
         <a
           href="https://www.linkedin.com/in/nick-wanner"
           target="_blank"
@@ -26,7 +28,7 @@ const Summary = ({ isDarkMode }) => {
           <img
             src={linkedinIcon}
             alt="Visit Nick's LinkedIn profile"
-            className={isDarkMode ? "inverted" : ""}
+            className={iconClassName}
           />
         </a>
         <a
@@ -37,7 +39,7 @@ const Summary = ({ isDarkMode }) => {
           <img
             src={githubIcon}
             alt="Visit Nick's GitHub"
-            className={isDarkMode ? "inverted" : ""}
+            className={iconClassName}
           />
         </a>
         <a
@@ -48,7 +50,7 @@ const Summary = ({ isDarkMode }) => {
           <img
             src={instagramIcon}
             alt="Visit Nick's Instagram"
-            className={isDarkMode ? "inverted" : ""}
+            className={iconClassName}
           />
         </a>
       </div>

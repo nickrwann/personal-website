@@ -1,9 +1,11 @@
-.profile-container {
+/* Container for the profile picture */
+.profile-pic-container {
     display: flex;
     justify-content: center;
 }
 
-.profile-pic {
+/* Image styles for the profile picture */
+.profile-pic-image {
     border-radius: 50%;
     height: 300px;
     object-fit: contain;

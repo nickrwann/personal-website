@@ -21,22 +21,22 @@ const Experience = ({ isDarkMode }) => {
   };
 
   const handleImageError = (e) => {
-    e.target.src = "default-logo.png"; // Replace with a path to your default fallback image
+    e.target.src = "default-logo.png"; // Fallback image path
   };
 
   return (
     <div
-      className={isDarkMode ? "Experience dark" : "Experience"}
+      className={`experience-container ${isDarkMode ? "dark-mode" : ""}`}
       data-testid="experience"
     >
       <h2>Work Experience</h2>
-      <div className="AccordionsContainer">
+      <div className="experience-accordion-list">
         {Object.keys(jobData).map((key) => (
           <Accordion
             key={key}
             expanded={expanded === key}
             onChange={handleChange(key)}
-            className={`MuiAccordion-root ${
+            className={`experience-accordion-item ${
               expanded === key ? "expanded" : ""
             }`}
           >
@@ -49,14 +49,14 @@ const Experience = ({ isDarkMode }) => {
               aria-controls={`${key}-content`}
               id={`${key}-header`}
             >
-              <div className="Experience-summary">
+              <div className="experience-accordion-summary">
                 <img
                   src={jobData[key].logo}
                   alt={`${jobData[key].company} Logo`}
-                  className="Experience-icon"
+                  className="experience-company-logo"
                   onError={handleImageError}
                 />
-                <div className="Experience-summary-text">
+                <div className="experience-summary-text">
                   <Typography variant="h6" component="span" className="title">
                     {jobData[key].title}
                   </Typography>
@@ -67,7 +67,7 @@ const Experience = ({ isDarkMode }) => {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography variant="body2">
+              <Typography variant="body2" className="description">
                 {jobData[key].description}
               </Typography>
             </AccordionDetails>
