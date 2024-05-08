@@ -4,7 +4,10 @@ import { AiOutlinePauseCircle } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { HiOutlineStatusOffline } from "react-icons/hi";
 import "../styles/NowPlaying.css";
+
 import soundbar from "../assets/images/soundbar.gif";
+import defaultAlbum from "../assets/images/defaultAlbum.png";
+import sleepingDog from "../assets/images/sleeping-dog.gif";
 
 // Define API URLs and client credentials
 const API_URLS = {
@@ -72,23 +75,31 @@ const NowPlaying = ({ isDarkMode }) => {
 
   // Fetches the currently playing song on Spotify
   const fetchNowPlaying = async () => {
-    await fetchAccessToken();
+    await fetchAccessToken(); // Ensure the access token is refreshed if necessary
     try {
       const response = await fetch(API_URLS.nowPlaying, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      // Return a "stopped" state if no content is currently playing
-      if (response.status === 204) return { is_playing: false, stopped: true };
-
-      // Handle other errors
-      if (response.status > 400)
+      if (response.status === 204) {
+        return {
+          stopped: true,
+          is_playing: false,
+          item: null,
+          progress_ms: 0,
+        };
+      } else if (response.status >= 400) {
+        console.error(`Error fetching song, status code: ${response.status}`);
         return { error: { message: "Unable to Fetch Song" } };
+      }
 
-      return await response.json();
+      const data = await response.json();
+      return { ...data, stopped: false };
     } catch (error) {
       console.error("Error fetching currently playing song:", error);
-      return { error: { message: error.message } };
+      return {
+        error: { message: error.message || "Unexpected error occurred" },
+      };
     }
   };
 
@@ -146,9 +157,8 @@ const NowPlaying = ({ isDarkMode }) => {
   if (nowPlaying.error) return <div>Error: {nowPlaying.error.message}</div>;
 
   // Extracts and renders song data
-  const { is_playing, item, progress_ms } = nowPlaying;
-  console.log(nowPlaying);
-  const playState = is_playing ? "PLAY" : "PAUSE";
+  const { stopped, is_playing, item, progress_ms } = nowPlaying;
+  const playState = stopped ? "STOPPED" : is_playing ? "PLAY" : "PAUSE";
   const duration_ms = item?.duration_ms;
 
   return (
@@ -157,7 +167,14 @@ const NowPlaying = ({ isDarkMode }) => {
       onClick={() => handleCardClick(item)}
     >
       <div className="nowPlayingImage">
-        <img src={item?.album?.images?.[0]?.url || ""} alt="Album Art" />
+        {playState === "PLAY" || playState === "PAUSE" ? (
+          <img
+            src={item?.album?.images?.[0]?.url || <img src={soundbar} />}
+            alt="Album Art"
+          />
+        ) : (
+          <img src={defaultAlbum} alt="Album Art" />
+        )}
       </div>
       <div id="nowPlayingDetails">
         <div
@@ -166,15 +183,19 @@ const NowPlaying = ({ isDarkMode }) => {
             isOverflowing ? "marquee-content" : ""
           }`}
         >
-          {item?.name || ""}
+          {playState === "PLAY" || playState === "PAUSE"
+            ? item?.name
+            : "Nick is Offline"}
         </div>
         <div className="nowPlayingArtist">
-          {item?.artists?.map((artist) => artist.name).join(", ") || ""}
+          {playState === "PLAY" || playState === "PAUSE"
+            ? item?.artists?.map((artist) => artist.name).join(", ") || ""
+            : ""}
         </div>
         <div className="nowPlayingTime">
-          {progress_ms && duration_ms
+          {playState === "PLAY" || playState === "PAUSE"
             ? `${formatTime(progress_ms)} / ${formatTime(duration_ms)}`
-            : ""}
+            : `${formatTime(progress_ms)} / ${formatTime(progress_ms)}`}
         </div>
       </div>
       <div className="nowPlayingState">
@@ -182,8 +203,11 @@ const NowPlaying = ({ isDarkMode }) => {
           <img src={soundbar} alt="Now Playing" />
         ) : playState === "PAUSE" ? (
           <AiOutlinePauseCircle size={40} />
+        ) : playState === "STOPPED" ? (
+          // <HiOutlineStatusOffline size={40} />
+          <img src={sleepingDog} alt="Stopped" />
         ) : (
-          <HiOutlineStatusOffline size={40} />
+          <BiErrorCircle size={40} />
         )}
       </div>
     </div>
