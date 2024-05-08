@@ -87,11 +87,11 @@
 /* Shrink the title for screens smaller than 600px */
 @media (max-width: 600px) {
   .title {
-    font-size: 0.8rem !important;
+    font-size: 0.9rem !important;
   }
 
   .date {
-    font-size: 0.6rem !important;
+    font-size: 0.7rem !important;
   }
 
   .description {
