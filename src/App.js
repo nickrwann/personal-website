@@ -34,7 +34,6 @@ const App = () => {
         <div className="section">
           <Widgets isDarkMode={darkMode}>
             <NowPlaying isDarkMode={darkMode} />
-            <NowPlaying isDarkMode={darkMode} />
           </Widgets>
         </div>
       </main>
