@@ -3,7 +3,7 @@ import { Buffer } from "buffer";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { HiOutlineStatusOffline } from "react-icons/hi";
-import "../styles/NowPlaying.css";
+import "../styles/NowPlayingTall.css";
 
 import soundbar from "../assets/images/soundbar.gif";
 import defaultAlbum from "../assets/images/defaultAlbum.png";

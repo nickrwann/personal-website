@@ -8,7 +8,7 @@ const Widgets = ({ isDarkMode, children }) => {
   return (
     <div className="widgets-section">
       <h2>Widgets</h2>
-      {children}
+      <div className="widgets-content">{children}</div>
     </div>
   );
 };

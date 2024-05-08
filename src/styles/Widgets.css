@@ -2,6 +2,13 @@
 .widgets-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Aligns children to the start of the flex container (left) */
-  width: 100%; /* Ensure the container takes full width */
+  align-items: flex-start;
+  width: 100%;
+}
+
+.widgets-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
 }
