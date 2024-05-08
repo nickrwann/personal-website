@@ -50,23 +50,6 @@
   }
 }
 
-/* .nowPlayingCard:hover {
-  cursor: pointer;
-  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
-  transform: translateX(-10px) translateY(-10px);
-  transition: all 0.5s ease;
-} */
-
-/* .nowPlayingCard.light-mode:hover {
-  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.nowPlayingCard.dark-mode:hover {
-  box-shadow: 10px 10px 0 rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.1);
-} */
-
 /* Image Container */
 .nowPlayingCard .nowPlayingImage {
   flex: 0 0 50%;
@@ -90,11 +73,6 @@
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
 
-.nowPlayingCard.light-mode .nowPlayingImage img:hover {
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
-  transform: translateX(-3px) translateY(-3px);
-}
-
 .nowPlayingCard.dark-mode .nowPlayingImage img {
   border: 1px solid #fff;
   box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3);
@@ -102,16 +80,15 @@
 
 /* Hover effects only on non-touch screens with a minimum width of 768px */
 @media (hover: hover) and (pointer: fine) {
+  .nowPlayingCard.light-mode .nowPlayingImage img:hover {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transform: translateX(-3px) translateY(-3px);
+  }
   .nowPlayingCard.dark-mode .nowPlayingImage img:hover {
     box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
     transform: translateX(-3px) translateY(-3px);
   }
 }
-
-/* .nowPlayingCard.dark-mode .nowPlayingImage img:hover {
-  box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
-  transform: translateX(-3px) translateY(-3px);
-} */
 
 /* Details */
 #nowPlayingDetails {
