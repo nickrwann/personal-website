@@ -15,7 +15,7 @@ const API_URLS = {
   token: "https://accounts.spotify.com/api/token",
 };
 
-// Client credentials (not secure in production, here for PoC purposes)
+// Client credentials (replace these with secure server-side storage for production)
 const CLIENT_ID = "74f58c08f09842e4a038c338d877a54e";
 const CLIENT_SECRET = "e769676bd0d1487fb99bfa7008cf9c76";
 const REFRESH_TOKEN =
@@ -29,6 +29,84 @@ const formatTime = (ms) => {
   return `${minutes.toString().padStart(2, "0")}:${seconds
     .toString()
     .padStart(2, "0")}`;
+};
+
+// Helper function to create a response structure
+const createResponse = (overrides) => ({
+  stopped: true,
+  is_playing: false,
+  item: null,
+  progress_ms: 0,
+  error: false,
+  ...overrides,
+});
+
+// Centralized error handling and response normalization
+const handleApiResponse = async (response) => {
+  if (response.status === 204) {
+    return createResponse();
+  }
+  if (response.status >= 400) {
+    console.error(`Error fetching song, status code: ${response.status}`);
+    return createResponse({ error: true });
+  }
+  try {
+    const data = await response.json();
+    return createResponse({ ...data, stopped: false, error: false });
+  } catch (error) {
+    console.error("Error parsing response:", error);
+    return createResponse({ error: true });
+  }
+};
+
+// Fetches a new access token if the current one is expired or missing
+const fetchAccessToken = async (
+  setAccessToken,
+  setTokenExpiry,
+  accessToken,
+  tokenExpiry
+) => {
+  if (!accessToken || Date.now() >= tokenExpiry) {
+    const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
+      "base64"
+    );
+    const params = new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: REFRESH_TOKEN,
+    });
+
+    const response = await fetch(API_URLS.token, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${basic}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params,
+    });
+
+    const data = await response.json();
+    setAccessToken(data.access_token);
+    setTokenExpiry(Date.now() + data.expires_in * 1000); // expiry in ms
+  }
+};
+
+// Fetches the currently playing song on Spotify
+const fetchNowPlaying = async (
+  accessToken,
+  setAccessToken,
+  setTokenExpiry,
+  tokenExpiry
+) => {
+  await fetchAccessToken(
+    setAccessToken,
+    setTokenExpiry,
+    accessToken,
+    tokenExpiry
+  );
+  const response = await fetch(API_URLS.nowPlaying, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return handleApiResponse(response);
 };
 
 // Opens a Spotify link in a new tab
@@ -47,64 +125,12 @@ const NowPlaying = ({ isDarkMode }) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const titleRef = useRef(null);
 
-  // Fetches a new access token if the current one is expired or missing
-  const fetchAccessToken = async () => {
-    if (!accessToken || Date.now() >= tokenExpiry) {
-      const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
-        "base64"
-      );
-      const params = new URLSearchParams({
-        grant_type: "refresh_token",
-        refresh_token: REFRESH_TOKEN,
-      });
-
-      const response = await fetch(API_URLS.token, {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${basic}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: params,
-      });
-
-      const data = await response.json();
-      setAccessToken(data.access_token);
-      setTokenExpiry(Date.now() + data.expires_in * 1000); // expiry in ms
-    }
-  };
-
-  // Fetches the currently playing song on Spotify
-  const fetchNowPlaying = async () => {
-    await fetchAccessToken(); // Ensure the access token is refreshed if necessary
-    try {
-      const response = await fetch(API_URLS.nowPlaying, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      if (response.status === 204) {
-        return {
-          stopped: true,
-          is_playing: false,
-          item: null,
-          progress_ms: 0,
-        };
-      } else if (response.status >= 400) {
-        console.error(`Error fetching song, status code: ${response.status}`);
-        return { error: { message: "Unable to Fetch Song" } };
-      }
-
-      const data = await response.json();
-      return { ...data, stopped: false };
-    } catch (error) {
-      console.error("Error fetching currently playing song:", error);
-      return {
-        error: { message: error.message || "Unexpected error occurred" },
-      };
-    }
-  };
-
   // Memoized function to fetch the currently playing song
-  const fetchNowPlayingMemoized = useMemo(() => fetchNowPlaying, [accessToken]);
+  const fetchNowPlayingMemoized = useMemo(
+    () => () =>
+      fetchNowPlaying(accessToken, setAccessToken, setTokenExpiry, tokenExpiry),
+    [accessToken, tokenExpiry]
+  );
 
   // Periodically fetch the currently playing song
   useEffect(() => {
@@ -130,11 +156,10 @@ const NowPlaying = ({ isDarkMode }) => {
         const translationPercentage = (titleWidth / containerWidth) * 100;
         const translationTime = translationPercentage / translationSpeed;
         const dynamicMarqueeKeyframes = `@keyframes marquee-animation {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-${translationPercentage}%); }
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-${translationPercentage}%); }
         }`;
 
-        // Check or create the style element
         let styleElement = document.head.querySelector("#marquee-style");
         if (!styleElement) {
           styleElement = document.createElement("style");
@@ -143,7 +168,6 @@ const NowPlaying = ({ isDarkMode }) => {
         }
         styleElement.innerHTML = dynamicMarqueeKeyframes;
 
-        // Apply the animation with the calculated duration
         const animationKeyframes = `marquee-animation ${translationTime}s linear infinite`;
         titleElement.style.animation = animationKeyframes;
       } else {
@@ -152,13 +176,19 @@ const NowPlaying = ({ isDarkMode }) => {
     }
   }, [nowPlaying]);
 
-  // Returns a loading message or displays an error
-  if (!nowPlaying) return <div>Loading...</div>;
-  if (nowPlaying.error) return <div>Error: {nowPlaying.error.message}</div>;
-
   // Extracts and renders song data
-  const { stopped, is_playing, item, progress_ms } = nowPlaying;
-  const playState = stopped ? "STOPPED" : is_playing ? "PLAY" : "PAUSE";
+  const { stopped, is_playing, item, progress_ms, error } = nowPlaying || {
+    error: false,
+    stopped: true,
+    playState: false,
+  };
+  const playState = error
+    ? "ERROR"
+    : stopped
+    ? "STOPPED"
+    : is_playing
+    ? "PLAY"
+    : "PAUSE";
   const duration_ms = item?.duration_ms;
 
   return (
@@ -169,7 +199,7 @@ const NowPlaying = ({ isDarkMode }) => {
       <div className="nowPlayingImage">
         {playState === "PLAY" || playState === "PAUSE" ? (
           <img
-            src={item?.album?.images?.[0]?.url || <img src={soundbar} />}
+            src={item?.album?.images?.[0]?.url || defaultAlbum}
             alt="Album Art"
           />
         ) : (
@@ -195,7 +225,7 @@ const NowPlaying = ({ isDarkMode }) => {
         <div className="nowPlayingTime">
           {playState === "PLAY" || playState === "PAUSE"
             ? `${formatTime(progress_ms)} / ${formatTime(duration_ms)}`
-            : `${formatTime(progress_ms)} / ${formatTime(progress_ms)}`}
+            : `${formatTime(0)} / ${formatTime(0)}`}
         </div>
       </div>
       <div className="nowPlayingState">
@@ -203,11 +233,10 @@ const NowPlaying = ({ isDarkMode }) => {
           <img src={soundbar} alt="Now Playing" />
         ) : playState === "PAUSE" ? (
           <AiOutlinePauseCircle size={40} />
-        ) : playState === "STOPPED" ? (
-          // <HiOutlineStatusOffline size={40} />
-          <img src={sleepingDog} className="dog" alt="Stopped" />
-        ) : (
+        ) : playState === "ERROR" ? (
           <BiErrorCircle size={40} />
+        ) : (
+          <img src={sleepingDog} className="dog" alt="Stopped" />
         )}
       </div>
     </div>
