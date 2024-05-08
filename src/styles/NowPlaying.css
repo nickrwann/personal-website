@@ -9,7 +9,7 @@
   max-width: 400px;
   width: 95%;
   height: 100px;
-  /* margin: auto; */
+  margin: auto;
 }
 
 .nowPlayingCard.light-mode {
@@ -117,4 +117,8 @@
 
 .nowPlayingCard.light-mode .nowPlayingState img {
   filter: brightness(0) invert(0);
+}
+
+.nowPlayingCard.light-mode .nowPlayingState img.dog {
+  filter: none;
 }
