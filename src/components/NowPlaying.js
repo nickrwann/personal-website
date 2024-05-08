@@ -204,10 +204,10 @@ const NowPlaying = ({ isDarkMode }) => {
         ) : playState === "PAUSE" ? (
           <AiOutlinePauseCircle size={40} />
         ) : playState === "STOPPED" ? (
-          <HiOutlineStatusOffline size={40} />
-        ) : (
+          // <HiOutlineStatusOffline size={40} />
           <img src={sleepingDog} className="dog" alt="Stopped" />
-          // <BiErrorCircle size={40} />
+        ) : (
+          <BiErrorCircle size={40} />
         )}
       </div>
     </div>
