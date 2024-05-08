@@ -1,8 +1,3 @@
-/* Container for the overall experience section */
-.experience-container {
-  /* padding-bottom: 25px; */
-}
-
 /* Dark mode specific container class */
 .experience-container.dark-mode .experience-accordion-item {
   background-color: #18181b !important;
@@ -31,8 +26,17 @@
   bottom: 0;
   left: 2.5%; /* 5% left margin */
   width: 95%; /* 90% wide border */
-  border-bottom: 1px solid #ffffff35; /* Border style */
   box-sizing: border-box; /* Prevents width changes affecting size */
+}
+
+/* Dark mode border style */
+.dark-mode .experience-accordion-item::after {
+  border-bottom: 1px solid #ffffff35; /* Border style for dark mode */
+}
+
+/* Light mode border style (default if not in dark mode) */
+.experience-container:not(.dark-mode) .experience-accordion-item::after {
+  border-bottom: 1px solid #00000060; /* Border style for light mode */
 }
 
 /* Hide the border for the last accordion */

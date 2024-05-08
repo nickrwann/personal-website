@@ -8,12 +8,22 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { makeStyles } from "@mui/styles";
 
 // Data and styles
 import jobData from "../data/jobData";
 import "../styles/Experience.css";
 
-const Experience = ({ isDarkMode }) => {
+const useStyles = makeStyles({
+  hideBorder: {
+    "&.MuiAccordion-root:before": {
+      display: "none", // This will hide the border
+    },
+  },
+});
+
+function Experience({ isDarkMode }) {
+  const classes = useStyles();
   const [expanded, setExpanded] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -36,7 +46,7 @@ const Experience = ({ isDarkMode }) => {
             key={key}
             expanded={expanded === key}
             onChange={handleChange(key)}
-            className={`experience-accordion-item ${
+            className={`${classes.hideBorder} experience-accordion-item ${
               expanded === key ? "expanded" : ""
             }`}
           >
@@ -76,7 +86,7 @@ const Experience = ({ isDarkMode }) => {
       </div>
     </div>
   );
-};
+}
 
 Experience.propTypes = {
   isDarkMode: PropTypes.bool.isRequired,
