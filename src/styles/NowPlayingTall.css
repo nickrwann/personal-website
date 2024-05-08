@@ -37,7 +37,7 @@
   transition: all 0.5s ease;
 }
 
-.nowPlayingCard.light-mode:hover {
+/* .nowPlayingCard.light-mode:hover {
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -45,7 +45,7 @@
 .nowPlayingCard.dark-mode:hover {
   box-shadow: 10px 10px 0 rgba(255, 255, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.1);
-}
+} */
 
 /* Image Container */
 .nowPlayingCard .nowPlayingImage {
@@ -80,10 +80,10 @@
   box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3);
 }
 
-.nowPlayingCard.dark-mode .nowPlayingImage img:hover {
+/* .nowPlayingCard.dark-mode .nowPlayingImage img:hover {
   box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
   transform: translateX(-3px) translateY(-3px);
-}
+} */
 
 /* Details */
 #nowPlayingDetails {
