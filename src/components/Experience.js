@@ -29,7 +29,7 @@ const Experience = ({ isDarkMode }) => {
       className={`experience-container ${isDarkMode ? "dark-mode" : ""}`}
       data-testid="experience"
     >
-      <h2>Professional Experience</h2>
+      <h2>Experience</h2>
       <div className="experience-accordion-list">
         {Object.keys(jobData).map((key) => (
           <Accordion
