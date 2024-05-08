@@ -152,7 +152,7 @@ const NowPlaying = ({ isDarkMode }) => {
       setIsOverflowing(isOverflowing);
 
       if (isOverflowing) {
-        const translationSpeed = 15;
+        const translationSpeed = 10;
         const translationPercentage = (titleWidth / containerWidth) * 100;
         const translationTime = translationPercentage / translationSpeed;
         const dynamicMarqueeKeyframes = `@keyframes marquee-animation {
