@@ -1,11 +1,14 @@
 import React from "react";
 
-// Styles
+// Import Styles
 import "../styles/Widgets.css";
 
 const Widgets = ({ isDarkMode, children }) => {
-  // Check the number of children
+  // Count the number of children components
   const childrenCount = React.Children.count(children);
+
+  // Determine layout style based on the number of child components
+  const justifyContentStyle = childrenCount > 1 ? "space-between" : "center";
 
   return (
     <div className="widgets-section">
@@ -13,7 +16,7 @@ const Widgets = ({ isDarkMode, children }) => {
       <div
         className="widgets-content"
         style={{
-          justifyContent: childrenCount > 1 ? "space-between" : "center",
+          justifyContent: justifyContentStyle,
         }}
       >
         {children}
