@@ -1,0 +1,45 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is the API documentation for the Personal Website",
+      "version": "1.0.0",
+      "title": "Personal Website API",
+      "contact": {
+        "email": "nick@example.com"
+      }
+    },
+    "host": "127.0.0.1:5000",
+    "basePath": "/api",
+    "tags": [
+      {
+        "name": "Spotify",
+        "description": "Spotify related endpoints"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+    "paths": {
+      "/spotify/now-playing": {
+        "get": {
+          "tags": [
+            "Spotify"
+          ],
+          "summary": "Get currently playing song",
+          "description": "Fetches the currently playing song from Spotify",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

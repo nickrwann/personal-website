@@ -1,0 +1,8 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+
+# Misc
+.DS_Store
+.env

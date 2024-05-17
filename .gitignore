@@ -1,18 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/frontend/node_modules/
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
+# General
 .DS_Store
 .env
 .env.local
@@ -20,6 +8,17 @@
 .env.test.local
 .env.production.local
 
+# Node.js (ignore node_modules in root)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Production
+/build
