@@ -1,22 +1,15 @@
 version: 1
 frontend:
   phases:
-<<<<<<< HEAD
     preBuild:
       commands:
         - npm install --legacy-peer-deps
     build:
       commands:
-=======
-    build:
-      commands:
-        - npm install
->>>>>>> 7865fcb1d4a34e11be99c4ec892ce0bba785798e
         - npm run build
   artifacts:
     baseDirectory: build
     files:
-<<<<<<< HEAD
       - "**/*"
   cache:
     paths:
@@ -27,9 +20,3 @@ env:
     REACT_APP_SPOTIFY_CLIENT_ID: $SPOTIFY_CLIENT_ID
     REACT_APP_SPOTIFY_CLIENT_SECRET: $SPOTIFY_CLIENT_SECRET
     REACT_APP_SPOTIFY_REFRESH_TOKEN: $SPOTIFY_REFRESH_TOKEN
-=======
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
->>>>>>> 7865fcb1d4a34e11be99c4ec892ce0bba785798e
