@@ -1,4 +1,3 @@
-// React and Hooks
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
@@ -8,22 +7,21 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { makeStyles } from "@mui/styles";
+
+// Styled components
+import { styled } from "@mui/system";
 
 // Data and styles
 import jobData from "../data/jobData";
 import "../styles/Experience.css";
 
-const useStyles = makeStyles({
-  hideBorder: {
-    "&.MuiAccordion-root:before": {
-      display: "none", // This will hide the border
-    },
+const StyledAccordion = styled(Accordion)(({ theme }) => ({
+  "&.MuiAccordion-root:before": {
+    display: "none", // This will hide the border
   },
-});
+}));
 
 function Experience({ isDarkMode }) {
-  const classes = useStyles();
   const [expanded, setExpanded] = useState(null);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -42,11 +40,11 @@ function Experience({ isDarkMode }) {
       <h2>Experience</h2>
       <div className="experience-accordion-list">
         {Object.keys(jobData).map((key) => (
-          <Accordion
+          <StyledAccordion
             key={key}
             expanded={expanded === key}
             onChange={handleChange(key)}
-            className={`${classes.hideBorder} experience-accordion-item ${
+            className={`experience-accordion-item ${
               expanded === key ? "expanded" : ""
             }`}
           >
@@ -81,7 +79,7 @@ function Experience({ isDarkMode }) {
                 {jobData[key].description}
               </Typography>
             </AccordionDetails>
-          </Accordion>
+          </StyledAccordion>
         ))}
       </div>
     </div>

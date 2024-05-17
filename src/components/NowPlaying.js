@@ -15,11 +15,10 @@ const API_URLS = {
   token: "https://accounts.spotify.com/api/token",
 };
 
-// Client credentials (replace these with secure server-side storage for production)
-const CLIENT_ID = "74f58c08f09842e4a038c338d877a54e";
-const CLIENT_SECRET = "e769676bd0d1487fb99bfa7008cf9c76";
-const REFRESH_TOKEN =
-  "AQBITY5PNdJR3WVrZ6mKrz_vaYds0DlWI9FBlEzCNQ0hMnalRpceBuXbHFfvatUw7uivUyJrDrvGZ13XhKZh4Sfdo_0aMaSghQDxRANHz29cBl_U2rlaGE7N4H-PjLo7aQY";
+// Client credentials
+const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+const REFRESH_TOKEN = process.env.REACT_APP_SPOTIFY_REFRESH_TOKEN;
 
 // Helper function to format time from milliseconds to `mm:ss`
 const formatTime = (ms) => {

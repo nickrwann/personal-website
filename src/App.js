@@ -36,22 +36,6 @@ const App = () => {
             <NowPlaying isDarkMode={darkMode} />
           </Widgets>
         </div>
-        <div>
-          {/* LightWidget WIDGET */}
-          <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-          <iframe
-            src="//lightwidget.com/widgets/01e9a775569a566c90f475218a35d958.html"
-            scrolling="no"
-            allowTransparency="true"
-            className="lightwidget-widget"
-            style={{
-              width: "100%",
-              border: "0",
-              overflow: "visible",
-              minHeight: "1000px", // Example minimum height
-            }}
-          ></iframe>
-        </div>
       </main>
     </div>
   );
