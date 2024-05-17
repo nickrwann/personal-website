@@ -1,92 +1,105 @@
-/* Overall Experience section styling */
-.Experience {
-    padding: 0px 0 25px 0;
+/* Dark mode specific container class */
+.experience-container.dark-mode .experience-accordion-item {
+  background-color: #18181b !important;
 }
 
-/* Container wrapping all accordions with rounded corners */
-.Experience .AccordionsContainer {
-    overflow: hidden;
-    border-radius: 15px;
+/* Accordion list container with rounded corners */
+.experience-accordion-list {
+  overflow: hidden;
+  border-radius: 15px;
 }
 
-/* Dark mode specific accordion background */
-.Experience.dark .MuiAccordion-root {
-    background-color: #18181B !important;
+/* Accordion item styling, retaining background and removing box shadows */
+.experience-accordion-item {
+  background-color: inherit !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  margin: 0 !important;
+  position: relative;
+  padding-bottom: 1px; /* Space for border */
 }
 
-/* Default accordion styles inheriting background and removing box shadows */
-.Experience .MuiAccordion-root {
-    background-color: inherit !important;
-    box-shadow: none !important;
-    color: inherit !important;
-    margin: 0 !important;
-    position: relative;
-    padding-bottom: 1px; /* Creates space for the border */
+/* Adds a 90%-width border at the bottom */
+.experience-accordion-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2.5%; /* 5% left margin */
+  width: 95%; /* 90% wide border */
+  box-sizing: border-box; /* Prevents width changes affecting size */
 }
 
-/* Pseudo-element to create a 90% wide bottom border */
-.Experience .MuiAccordion-root::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 2.5%; /* Starts 5% from the left edge */
-    width: 95%; /* Makes the border 90% of the parent's width */
-    border-bottom: 1px solid #ffffff35; /* Style of the border */
-    box-sizing: border-box; /* Ensures the border width does not add to the overall size */
+/* Dark mode border style */
+.dark-mode .experience-accordion-item::after {
+  border-bottom: 1px solid #ffffff35; /* Border style for dark mode */
 }
 
-/* Remove bottom border for the last accordion */
-.Experience .MuiAccordion-root:last-child::after {
-    display: none; /* Hides the border on the last accordion */
+/* Light mode border style (default if not in dark mode) */
+.experience-container:not(.dark-mode) .experience-accordion-item::after {
+  border-bottom: 1px solid #00000060; /* Border style for light mode */
 }
 
-/* Ensure no additional margins for expanded accordions */
-.Experience .MuiAccordion-root.expanded {
-    margin-bottom: 0 !important;
+/* Hide the border for the last accordion */
+.experience-accordion-item:last-child::after {
+  display: none;
 }
 
-/* Styling for accordion summary */
-.Experience .MuiAccordionSummary-root {
-    align-items: center;
-    cursor: pointer;
-    display: flex;
+/* Prevent margins on expanded accordion items */
+.experience-accordion-item.expanded {
+  margin-bottom: 0 !important;
 }
 
-/* Styling for the section containing accordion details like logo and text */
-.Experience-summary {
-    align-items: center;
-    display: flex;
-    width: 100%;
+/* Accordion summary styling */
+.experience-accordion-summary {
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  width: 100%;
 }
 
-/* Styling for the company logo within each accordion */
-.Experience-icon {
-    background-color: white;
-    border-radius: 50%;
-    height: 40px;
-    margin-right: 16px;
-    object-fit: contain;
+/* Styling for the company logo */
+.experience-company-logo {
+  background-color: white;
+  border-radius: 50%;
+  height: 40px;
+  margin-right: 16px;
+  object-fit: contain;
 }
 
-/* Text container within accordion summary */
-.Experience-summary-text {
-    display: flex;
-    flex-direction: column;
+/* Container for summary text */
+.experience-summary-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-    font-size: 1rem !important;
+  font-size: 1rem !important;
 }
 
 .date {
-    font-size: .75rem !important;
+  font-size: 0.75rem !important;
 }
 
 .description {
-    font-size: 1rem !important;
+  font-size: 1rem !important;
+}
+
+/* Shrink the title for screens smaller than 600px */
+@media (max-width: 600px) {
+  .title {
+    font-size: 0.9rem !important;
+  }
+
+  .date {
+    font-size: 0.7rem !important;
+  }
+
+  .description {
+    font-size: 0.9rem !important;
+  }
 }
 
 /* Padding for accordion details */
-.Experience .MuiAccordionDetails-root {
-    padding: 16px !important;
+.accordion-details {
+  padding: 16px !important;
 }

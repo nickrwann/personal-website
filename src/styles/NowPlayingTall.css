@@ -1,0 +1,147 @@
+/* Card container */
+.nowPlayingCard {
+  /* Layout & Positioning */
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  /* Sizing */
+  height: 300px;
+  width: 40%;
+  min-width: 275px;
+
+  /* Spacing */
+  margin: 0px 25px 25px 25px;
+  padding-bottom: 25px;
+
+  /* Visual Design */
+  border-radius: 22px;
+}
+
+.nowPlayingCard.light-mode {
+  border: 2px solid #000;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.nowPlayingCard.dark-mode {
+  border: 2px solid #fff;
+  box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects only on non-touch screens with a minimum width of 768px */
+@media (hover: hover) and (pointer: fine) {
+  .nowPlayingCard:hover {
+    cursor: pointer;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+    transform: translateX(-10px) translateY(-10px);
+    transition: all 0.5s ease;
+  }
+
+  .nowPlayingCard.light-mode:hover {
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .nowPlayingCard.dark-mode:hover {
+    box-shadow: 10px 10px 0 rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Image Container */
+.nowPlayingCard .nowPlayingImage {
+  flex: 0 0 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image Element */
+.nowPlayingCard .nowPlayingImage img {
+  border-radius: 8px;
+  transition: all 0.5s ease;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+
+.nowPlayingCard.light-mode .nowPlayingImage img {
+  border: 1px solid #000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.nowPlayingCard.dark-mode .nowPlayingImage img {
+  border: 1px solid #fff;
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects only on non-touch screens with a minimum width of 768px */
+@media (hover: hover) and (pointer: fine) {
+  .nowPlayingCard.light-mode .nowPlayingImage img:hover {
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transform: translateX(-3px) translateY(-3px);
+  }
+  .nowPlayingCard.dark-mode .nowPlayingImage img:hover {
+    box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.3);
+    transform: translateX(-3px) translateY(-3px);
+  }
+}
+
+/* Details */
+#nowPlayingDetails {
+  flex: 0 0 25%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow: hidden;
+}
+
+.nowPlayingTitle {
+  white-space: nowrap;
+  text-align: center;
+  font-size: 20px;
+  width: 90%;
+}
+
+.nowPlayingArtist {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 90%;
+}
+
+.nowPlayingTime {
+  text-align: center;
+  width: 90%;
+}
+
+/* State */
+.nowPlayingState {
+  flex: 0 0 25%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.nowPlayingState img {
+  height: 100%;
+}
+
+.nowPlayingCard.dark-mode .nowPlayingState img {
+  filter: none;
+}
+
+.nowPlayingCard.light-mode .nowPlayingState img {
+  filter: brightness(0) invert(0);
+}
+
+.nowPlayingCard.light-mode .nowPlayingState img.dog {
+  filter: none;
+}
