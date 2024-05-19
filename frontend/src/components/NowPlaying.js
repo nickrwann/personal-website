@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { Buffer } from "buffer";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 import { HiOutlineStatusOffline } from "react-icons/hi";
@@ -8,17 +7,6 @@ import "../styles/NowPlayingTall.css";
 import soundbar from "../assets/images/soundbar.gif";
 import defaultAlbum from "../assets/images/defaultAlbum.png";
 import sleepingDog from "../assets/images/sleeping-dog.gif";
-
-// Define API URLs and client credentials
-const API_URLS = {
-  nowPlaying: "https://api.spotify.com/v1/me/player/currently-playing",
-  token: "https://accounts.spotify.com/api/token",
-};
-
-// Client credentials
-const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
-const REFRESH_TOKEN = process.env.REACT_APP_SPOTIFY_REFRESH_TOKEN;
 
 // Helper function to format time from milliseconds to `mm:ss`
 const formatTime = (ms) => {
@@ -30,82 +18,21 @@ const formatTime = (ms) => {
     .padStart(2, "0")}`;
 };
 
-// Helper function to create a response structure
-const createResponse = (overrides) => ({
-  stopped: true,
-  is_playing: false,
-  item: null,
-  progress_ms: 0,
-  error: false,
-  ...overrides,
-});
-
-// Centralized error handling and response normalization
-const handleApiResponse = async (response) => {
-  if (response.status === 204) {
-    return createResponse();
-  }
-  if (response.status >= 400) {
-    console.error(`Error fetching song, status code: ${response.status}`);
-    return createResponse({ error: true });
-  }
+// Fetches the currently playing song on Spotify from the backend
+const fetchNowPlaying = async () => {
   try {
-    const data = await response.json();
-    return createResponse({ ...data, stopped: false, error: false });
-  } catch (error) {
-    console.error("Error parsing response:", error);
-    return createResponse({ error: true });
-  }
-};
-
-// Fetches a new access token if the current one is expired or missing
-const fetchAccessToken = async (
-  setAccessToken,
-  setTokenExpiry,
-  accessToken,
-  tokenExpiry
-) => {
-  if (!accessToken || Date.now() >= tokenExpiry) {
-    const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString(
-      "base64"
+    const response = await fetch(
+      "http://localhost:5000/api/spotify/now-playing"
     );
-    const params = new URLSearchParams({
-      grant_type: "refresh_token",
-      refresh_token: REFRESH_TOKEN,
-    });
-
-    const response = await fetch(API_URLS.token, {
-      method: "POST",
-      headers: {
-        Authorization: `Basic ${basic}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: params,
-    });
-
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     const data = await response.json();
-    setAccessToken(data.access_token);
-    setTokenExpiry(Date.now() + data.expires_in * 1000); // expiry in ms
+    return data;
+  } catch (error) {
+    console.error("Error fetching now playing data:", error);
+    return { error: true };
   }
-};
-
-// Fetches the currently playing song on Spotify
-const fetchNowPlaying = async (
-  accessToken,
-  setAccessToken,
-  setTokenExpiry,
-  tokenExpiry
-) => {
-  await fetchAccessToken(
-    setAccessToken,
-    setTokenExpiry,
-    accessToken,
-    tokenExpiry
-  );
-  const response = await fetch(API_URLS.nowPlaying, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-  return handleApiResponse(response);
 };
 
 // Opens a Spotify link in a new tab
@@ -119,27 +46,51 @@ const handleCardClick = (item) => {
 
 const NowPlaying = ({ isDarkMode }) => {
   const [nowPlaying, setNowPlaying] = useState(null);
-  const [accessToken, setAccessToken] = useState("");
-  const [tokenExpiry, setTokenExpiry] = useState(0);
   const [isOverflowing, setIsOverflowing] = useState(false);
   const titleRef = useRef(null);
 
   // Memoized function to fetch the currently playing song
-  const fetchNowPlayingMemoized = useMemo(
-    () => () =>
-      fetchNowPlaying(accessToken, setAccessToken, setTokenExpiry, tokenExpiry),
-    [accessToken, tokenExpiry]
-  );
+  const fetchNowPlayingMemoized = useMemo(() => () => fetchNowPlaying(), []);
 
-  // Periodically fetch the currently playing song
+  // Fetch the currently playing song every 5 seconds
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const fetchInterval = setInterval(async () => {
       const data = await fetchNowPlayingMemoized();
-      setNowPlaying(data);
+      setNowPlaying((prev) => {
+        if (!prev) {
+          return data;
+        }
+
+        if (Math.abs(prev.progress_ms - data.progress_ms) < 5000) {
+          data.progress_ms = Math.max(prev.progress_ms, data.progress_ms);
+        }
+
+        return {
+          ...data,
+          progress_ms: Math.min(data.progress_ms, data.item?.duration_ms),
+        };
+      });
+    }, 2500);
+
+    return () => clearInterval(fetchInterval);
+  }, [fetchNowPlayingMemoized]);
+
+  // Update the progress time every second
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      setNowPlaying((prev) => {
+        if (!prev || prev.error || prev.stopped || !prev.is_playing) {
+          return prev;
+        }
+
+        const newProgressMs = prev.progress_ms + 1000;
+
+        return { ...prev, progress_ms: newProgressMs };
+      });
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [fetchNowPlayingMemoized]);
+    return () => clearInterval(updateInterval);
+  }, []);
 
   // Applies marquee animation if the title is overflowing
   useEffect(() => {
@@ -176,11 +127,12 @@ const NowPlaying = ({ isDarkMode }) => {
   }, [nowPlaying]);
 
   // Extracts and renders song data
-  const { stopped, is_playing, item, progress_ms, error } = nowPlaying || {
-    error: false,
-    stopped: true,
-    playState: false,
-  };
+  const { stopped, is_playing, item, progress_ms, error, timestamp } =
+    nowPlaying || {
+      error: false,
+      stopped: true,
+      playState: false,
+    };
   const playState = error
     ? "ERROR"
     : stopped
@@ -189,6 +141,7 @@ const NowPlaying = ({ isDarkMode }) => {
     ? "PLAY"
     : "PAUSE";
   const duration_ms = item?.duration_ms;
+  const adjustedProgressMs = Math.min(progress_ms, duration_ms);
 
   return (
     <div
@@ -223,8 +176,8 @@ const NowPlaying = ({ isDarkMode }) => {
         </div>
         <div className="nowPlayingTime">
           {playState === "PLAY" || playState === "PAUSE"
-            ? `${formatTime(progress_ms)} / ${formatTime(duration_ms)}`
-            : `${formatTime(0)} / ${formatTime(0)}`}
+            ? `${formatTime(adjustedProgressMs)} / ${formatTime(duration_ms)}`
+            : `00:00 / 00:00`}
         </div>
       </div>
       <div className="nowPlayingState">

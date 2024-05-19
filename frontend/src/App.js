@@ -6,7 +6,6 @@ import Summary from "./components/Summary";
 import Experience from "./components/Experience";
 import Widgets from "./components/Widgets";
 import NowPlaying from "./components/NowPlaying";
-import NowPlayingBackend from "./components/NowPlayingBackend";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -35,7 +34,6 @@ const App = () => {
         <div className="section">
           <Widgets isDarkMode={darkMode}>
             <NowPlaying isDarkMode={darkMode} />
-            <NowPlayingBackend isDarkMode={darkMode} />
           </Widgets>
         </div>
       </main>
