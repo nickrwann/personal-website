@@ -8,6 +8,16 @@ import soundbar from "../assets/images/soundbar.gif";
 import defaultAlbum from "../assets/images/defaultAlbum.png";
 import sleepingDog from "../assets/images/sleeping-dog.gif";
 
+// Helper function to format time from milliseconds to `mm:ss`
+const formatTime = (ms) => {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
+};
+
 // Fetches the currently playing song on Spotify from the backend
 const fetchNowPlaying = async () => {
   try {
@@ -42,15 +52,45 @@ const NowPlaying = ({ isDarkMode }) => {
   // Memoized function to fetch the currently playing song
   const fetchNowPlayingMemoized = useMemo(() => () => fetchNowPlaying(), []);
 
-  // Periodically fetch the currently playing song
+  // Fetch the currently playing song every 5 seconds
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const fetchInterval = setInterval(async () => {
       const data = await fetchNowPlayingMemoized();
-      setNowPlaying(data);
+      setNowPlaying((prev) => {
+        if (!prev) {
+          return data;
+        }
+
+        if (Math.abs(prev.progress_ms - data.progress_ms) < 5000) {
+          data.progress_ms = Math.max(prev.progress_ms, data.progress_ms);
+        }
+
+        return {
+          ...data,
+          progress_ms: Math.min(data.progress_ms, data.item?.duration_ms),
+        };
+      });
+    }, 2500);
+
+    return () => clearInterval(fetchInterval);
+  }, [fetchNowPlayingMemoized]);
+
+  // Update the progress time every second
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      setNowPlaying((prev) => {
+        if (!prev || prev.error || prev.stopped || !prev.is_playing) {
+          return prev;
+        }
+
+        const newProgressMs = prev.progress_ms + 1000;
+
+        return { ...prev, progress_ms: newProgressMs };
+      });
     }, 1000);
 
-    return () => clearInterval(interval);
-  }, [fetchNowPlayingMemoized]);
+    return () => clearInterval(updateInterval);
+  }, []);
 
   // Applies marquee animation if the title is overflowing
   useEffect(() => {
@@ -86,28 +126,13 @@ const NowPlaying = ({ isDarkMode }) => {
     }
   }, [nowPlaying]);
 
-  // Function to calculate the current time based on progress and timestamp
-  const calculateCurrentTime = (progressMs, timestamp) => {
-    const currentTime = Date.now();
-    const elapsedMs = currentTime - timestamp;
-    return progressMs + elapsedMs;
-  };
-
   // Extracts and renders song data
-  const {
-    stopped,
-    is_playing,
-    item,
-    progress_ms,
-    error,
-    progress_time,
-    duration_time,
-    timestamp,
-  } = nowPlaying || {
-    error: false,
-    stopped: true,
-    playState: false,
-  };
+  const { stopped, is_playing, item, progress_ms, error, timestamp } =
+    nowPlaying || {
+      error: false,
+      stopped: true,
+      playState: false,
+    };
   const playState = error
     ? "ERROR"
     : stopped
@@ -116,8 +141,7 @@ const NowPlaying = ({ isDarkMode }) => {
     ? "PLAY"
     : "PAUSE";
   const duration_ms = item?.duration_ms;
-
-  const adjustedProgressMs = calculateCurrentTime(progress_ms, timestamp);
+  const adjustedProgressMs = Math.min(progress_ms, duration_ms);
 
   return (
     <div
@@ -152,7 +176,7 @@ const NowPlaying = ({ isDarkMode }) => {
         </div>
         <div className="nowPlayingTime">
           {playState === "PLAY" || playState === "PAUSE"
-            ? `${formatTime(adjustedProgressMs)} / ${duration_time}`
+            ? `${formatTime(adjustedProgressMs)} / ${formatTime(duration_ms)}`
             : `00:00 / 00:00`}
         </div>
       </div>
@@ -169,16 +193,6 @@ const NowPlaying = ({ isDarkMode }) => {
       </div>
     </div>
   );
-};
-
-// Helper function to format time from milliseconds to `mm:ss`
-const formatTime = (ms) => {
-  const totalSeconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes.toString().padStart(2, "0")}:${seconds
-    .toString()
-    .padStart(2, "0")}`;
 };
 
 const NowPlayingBackend = NowPlaying;
